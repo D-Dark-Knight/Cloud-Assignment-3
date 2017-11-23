@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 bus_service = ServiceBusService(
     service_namespace='batmanandrobin491fb9',
-    shared_access_key_name='assignment3',
-    shared_access_key_value='AHQLYr22ggrKjA8JNUJpQpDyQYQuXxj7lZY/yrDVxKI=')
+    shared_access_key_name='ross',
+    shared_access_key_value='i7vczr8lLmA3XeyWEMfekhob0J3eWk09JUMv/qX2afs=')
 
 table_service = TableService(account_name='batmanandrobin491fb9', account_key='MPsdcQOiLZewcUIYHYtPkjRDtKrzHRq7Z/AVkIt9Zo6IvQP2/Zff4a19GXOwI4MIxOLvQ00lCIwo/lkqml4jbw==')
 
