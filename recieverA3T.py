@@ -3,9 +3,6 @@ from multiprocessing import Pool
 import thread
 from azure.storage.table import TableService, Entity
 
-from flask import Flask
-app = Flask(__name__)
-
 bus_service = ServiceBusService(
     service_namespace='batmanandrobin491fb9',
     shared_access_key_name='ross',
@@ -36,7 +33,6 @@ if __name__ == '__main__':
 	except:
 	   print "Error: unable to start thread"
 	while 1:
-		app.run()
 		pass
 
 	
