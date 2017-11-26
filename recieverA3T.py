@@ -26,26 +26,30 @@ def hello_world(i,j ):
 		
 if __name__ == '__main__':
 	try:
-	   thread.start_new_thread( hello_world, (0,19999) )
-	   thread.start_new_thread( hello_world, (20000,999999999) )
-	   thread.start_new_thread( hello_world, (40000,999999999) )
-	   thread.start_new_thread( hello_world, (60000,999999999) )
-	   thread.start_new_thread( hello_world, (80000,999999999) )
-	   thread.start_new_thread( hello_world, (100000,999999999) )
-	   thread.start_new_thread( hello_world, (120000,999999999) )
-	   thread.start_new_thread( hello_world, (120000,999999999) )
-	   thread.start_new_thread( hello_world, (120000,999999999) )
-	   thread.start_new_thread( hello_world, (120000,999999999) )
-	   thread.start_new_thread( hello_world, (120000,999999999) )
-	   thread.start_new_thread( hello_world, (120000,999999999) )
-	   thread.start_new_thread( hello_world, (120000,999999999) )
-	   thread.start_new_thread( hello_world, (120000,999999999) )
-	   thread.start_new_thread( hello_world, (120000,999999999) )
+	   thread.start_new_thread( hello_world, (0,30000) )
+	   thread.start_new_thread( hello_world, (30001,60000) )
+	   thread.start_new_thread( hello_world, (60001,90000) )
+	   thread.start_new_thread( hello_world, (90001,120000) )
+	   thread.start_new_thread( hello_world, (120001,150000) )
+	   thread.start_new_thread( hello_world, (150001,180000) )
+	   thread.start_new_thread( hello_world, (180001,210000) )
+	   thread.start_new_thread( hello_world, (210001,240000) )
+	   thread.start_new_thread( hello_world, (240001,270000) )
+	   thread.start_new_thread( hello_world, (270001,300000) )
+	   thread.start_new_thread( hello_world, (300001,330000) )
+	   thread.start_new_thread( hello_world, (330001,360000) )
+	   thread.start_new_thread( hello_world, (360001,390000) )
+	   thread.start_new_thread( hello_world, (390001,420000) )
+	   thread.start_new_thread( hello_world, (420001,450000) )
+	   thread.start_new_thread( hello_world, (450001,480000) )
+	   thread.start_new_thread( hello_world, (480001,510000) )
+	   thread.start_new_thread( hello_world, (510001,540000) )
+	   thread.start_new_thread( hello_world, (540001,570000) )
+	   thread.start_new_thread( hello_world, (570001,600000) )
 	except:
 	   print "Error: unable to start thread"
 	while 1:
 		app.run()
 		pass
 
-	
 	
