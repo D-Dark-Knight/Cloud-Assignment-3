@@ -3,6 +3,9 @@ from multiprocessing import Pool
 import thread
 from azure.storage.table import TableService, Entity
 
+#from flask import Flask
+#app = Flask(__name__)
+
 bus_service = ServiceBusService(
     service_namespace='batmanandrobin491fb9',
     shared_access_key_name='ross',
@@ -10,7 +13,7 @@ bus_service = ServiceBusService(
 
 table_service = TableService(account_name='batmanandrobin491fb9', account_key='MPsdcQOiLZewcUIYHYtPkjRDtKrzHRq7Z/AVkIt9Zo6IvQP2/Zff4a19GXOwI4MIxOLvQ00lCIwo/lkqml4jbw==')
 
-@app.route('/')
+#@app.route('/')
 def hello_world(i,j ):
 	while (i < j): 
 		msg = bus_service.receive_queue_message('assignment3', peek_lock=True)
@@ -33,6 +36,7 @@ if __name__ == '__main__':
 	except:
 	   print "Error: unable to start thread"
 	while 1:
+	#	app.run()
 		pass
 
 	
