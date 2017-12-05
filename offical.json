@@ -1,0 +1,626 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "loadBalancers_rosslb_name": {
+            "defaultValue": "rosslb",
+            "type": "String"
+        },
+		    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Admin username on all VMs."
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password on all VMs."
+      }
+    },
+        "publicIPAddresses_ross_name": {
+            "defaultValue": "ross",
+            "type": "String"
+        },
+        "virtualNetworks_rossVnet_name": {
+            "defaultValue": "rossVnet",
+            "type": "String"
+        },
+        "loadBalancers_ross6uigvlb_name": {
+            "defaultValue": "ross6uigvlb",
+            "type": "String"
+        },
+        "loadBalancers_assignment3lb_name": {
+            "defaultValue": "assignment3lb",
+            "type": "String"
+        },
+        "publicIPAddresses_rossvnet11_name": {
+            "defaultValue": "rossvnet11",
+            "type": "String"
+        },
+        "virtualNetworks_ross6uigvvnet_name": {
+            "defaultValue": "ross6uigvvnet",
+            "type": "String"
+        },
+        "publicIPAddresses_ross6uigvpip_name": {
+            "defaultValue": "ross6uigvpip",
+            "type": "String"
+        },
+        "autoscalesettings_cpuautoscale_name": {
+            "defaultValue": "cpuautoscale",
+            "type": "String"
+        },
+        "virtualNetworks_assignment3Vnet_name": {
+            "defaultValue": "assignment3Vnet",
+            "type": "String"
+        },
+        "virtualMachineScaleSets_assignment3_name": {
+            "defaultValue": "assignment3",
+            "type": "String"
+        },
+        "subnets_default_name": {
+            "defaultValue": "default",
+            "type": "String"
+        },
+        "subnets_default_name_1": {
+            "defaultValue": "default",
+            "type": "String"
+        },
+        "subnets_ross6uigvsubnet_name": {
+            "defaultValue": "ross6uigvsubnet",
+            "type": "String"
+        },
+        "loadBalancers_assignment3lb_id": {
+            "defaultValue": "/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/loadBalancers/assignment3lb/frontendIPConfigurations/LoadBalancerFrontEnd",
+            "type": "String"
+        },
+        "loadBalancers_assignment3lb_id_1": {
+            "defaultValue": "/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/loadBalancers/assignment3lb/frontendIPConfigurations/LoadBalancerFrontEnd",
+            "type": "String"
+        },
+        "loadBalancers_assignment3lb_id_2": {
+            "defaultValue": "/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/loadBalancers/assignment3lb/frontendIPConfigurations/LoadBalancerFrontEnd",
+            "type": "String"
+        },
+        "loadBalancers_ross6uigvlb_id": {
+            "defaultValue": "/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/loadBalancers/ross6uigvlb/frontendIPConfigurations/LoadBalancerFrontEnd",
+            "type": "String"
+        },
+        "loadBalancers_rosslb_id": {
+            "defaultValue": "/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/loadBalancers/rosslb/frontendIPConfigurations/LoadBalancerFrontEnd",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Compute/virtualMachineScaleSets/assignment3'.",
+            "type": "Microsoft.Compute/virtualMachineScaleSets",
+            "sku": {
+                "name": "Standard_A1",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "name": "[parameters('virtualMachineScaleSets_assignment3_name')]",
+            "apiVersion": "2017-03-30",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "singlePlacementGroup": true,
+                "upgradePolicy": {
+                    "mode": "Manual"
+                },
+                "virtualMachineProfile": {
+                    "osProfile": {
+                        "computerNamePrefix": "assignmen",
+                        "adminUsername": "ross",
+						"adminPassword": "[parameters('adminPassword')]",
+                        "linuxConfiguration": {
+                            "disablePasswordAuthentication": false
+                        },
+                        "secrets": []
+                    },
+                    "storageProfile": {
+                        "osDisk": {
+                            "createOption": "FromImage",
+                            "caching": "ReadWrite",
+                            "managedDisk": {
+                                "storageAccountType": "Standard_LRS"
+                            }
+                        },
+                        "imageReference": {
+                            "publisher": "Canonical",
+                            "offer": "UbuntuServer",
+                            "sku": "16.04-LTS",
+                            "version": "latest"
+                        }
+                    },
+                    "networkProfile": {
+                        "networkInterfaceConfigurations": [
+                            {
+                                "name": "[concat(parameters('virtualMachineScaleSets_assignment3_name'),'Nic')]",
+                                "properties": {
+                                    "primary": true,
+                                    "enableAcceleratedNetworking": false,
+                                    "dnsSettings": {
+                                        "dnsServers": []
+                                    },
+                                    "ipConfigurations": [
+                                        {
+                                            "name": "[concat(parameters('virtualMachineScaleSets_assignment3_name'),'IpConfig')]",
+                                            "properties": {
+                                                "subnet": {
+                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_assignment3Vnet_name'), parameters('subnets_default_name_1'))]"
+                                                },
+                                                "privateIPAddressVersion": "IPv4",
+                                                "loadBalancerBackendAddressPools": [
+                                                    {
+                                                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_assignment3lb_name')), '/backendAddressPools/bepool')]"
+                                                    }
+                                                ],
+                                                "loadBalancerInboundNatPools": [
+                                                    {
+                                                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_assignment3lb_name')), '/inboundNatPools/natpool')]"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+					                    "extensionProfile": {
+            "extensions": [
+              {
+                "name": "lapextension",
+                "properties": {
+                  "publisher": "Microsoft.Azure.Extensions",
+                  "type": "CustomScript",
+                  "typeHandlerVersion": "2.0",
+                  "autoUpgradeMinorVersion": true,
+                  "settings": {
+                    "fileUris": [
+                      "https://raw.githubusercontent.com/D-Dark-Knight/Cloud-Assignment-3/master/install.sh"
+                    ],
+                    "commandToExecute": "sh install.sh"
+                  }
+                }
+              }
+            ]
+          }
+                },
+                "overprovision": true
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_assignment3Vnet_name'), parameters('subnets_default_name_1'))]",
+                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_assignment3lb_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/microsoft.insights/autoscalesettings/cpuautoscale'.",
+            "type": "microsoft.insights/autoscalesettings",
+            "name": "[parameters('autoscalesettings_cpuautoscale_name')]",
+            "apiVersion": "2014-04-01",
+            "location": "eastus",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "profiles": [
+                    {
+                        "name": "Profile1",
+                        "capacity": {
+                            "minimum": "1",
+                            "maximum": "10",
+                            "default": "1"
+                        },
+                        "rules": [
+                            {
+                                "metricTrigger": {
+                                    "metricName": "Percentage CPU",
+                                    "metricNamespace": "",
+                                    "metricResourceUri": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSets_assignment3_name'))]",
+                                    "timeGrain": "PT1M",
+                                    "statistic": "Average",
+                                    "timeWindow": "PT5M",
+                                    "timeAggregation": "Average",
+                                    "operator": "GreaterThan",
+                                    "threshold": 75
+                                },
+                                "scaleAction": {
+                                    "direction": "Increase",
+                                    "type": "ChangeCount",
+                                    "value": "1",
+                                    "cooldown": "PT1M"
+                                }
+                            },
+                            {
+                                "metricTrigger": {
+                                    "metricName": "Percentage CPU",
+                                    "metricNamespace": "",
+                                    "metricResourceUri": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSets_assignment3_name'))]",
+                                    "timeGrain": "PT1M",
+                                    "statistic": "Average",
+                                    "timeWindow": "PT5M",
+                                    "timeAggregation": "Average",
+                                    "operator": "LessThan",
+                                    "threshold": 25
+                                },
+                                "scaleAction": {
+                                    "direction": "Decrease",
+                                    "type": "ChangeCount",
+                                    "value": "1",
+                                    "cooldown": "PT1M"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "enabled": true,
+                "name": "[parameters('autoscalesettings_cpuautoscale_name')]",
+                "targetResourceUri": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSets_assignment3_name'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSets_assignment3_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/loadBalancers/assignment3lb'.",
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "[parameters('loadBalancers_assignment3lb_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "bf181c3e-ed84-4550-a5c4-e7a432151af4",
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "etag": "W/\"a6c5acf4-77af-4fc3-a0ac-2e5af4f30ed2\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_rossvnet11_name'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "bepool",
+                        "etag": "W/\"a6c5acf4-77af-4fc3-a0ac-2e5af4f30ed2\"",
+                        "properties": {
+                            "provisioningState": "Succeeded"
+                        }
+                    }
+                ],
+
+                "inboundNatPools": [
+                    {
+                        "name": "natpool",
+                        "etag": "W/\"a6c5acf4-77af-4fc3-a0ac-2e5af4f30ed2\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "frontendPortRangeStart": 50000,
+                            "frontendPortRangeEnd": 50119,
+                            "backendPort": 22,
+                            "protocol": "Tcp",
+                            "frontendIPConfiguration": {
+                                "id": "[parameters('loadBalancers_assignment3lb_id_2')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_rossvnet11_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/loadBalancers/ross6uigvlb'.",
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "[parameters('loadBalancers_ross6uigvlb_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "038578de-955e-4adb-afff-e8e958b6d298",
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "etag": "W/\"69b8e717-1671-4fb0-bdc9-6920a138babb\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ross6uigvpip_name'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "ross6uigvbepool",
+                        "etag": "W/\"69b8e717-1671-4fb0-bdc9-6920a138babb\"",
+                        "properties": {
+                            "provisioningState": "Succeeded"
+                        }
+                    }
+                ],
+                "loadBalancingRules": [],
+                "probes": [],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": [
+                    {
+                        "name": "ross6uigvnatpool",
+                        "etag": "W/\"69b8e717-1671-4fb0-bdc9-6920a138babb\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "frontendPortRangeStart": 50000,
+                            "frontendPortRangeEnd": 50119,
+                            "backendPort": 22,
+                            "protocol": "Tcp",
+                            "frontendIPConfiguration": {
+                                "id": "[parameters('loadBalancers_ross6uigvlb_id')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ross6uigvpip_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/loadBalancers/rosslb'.",
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "[parameters('loadBalancers_rosslb_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "b1adfd2c-4c23-4e24-86a5-6d0fe54ce9f0",
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "etag": "W/\"d9c52a29-77cf-47a6-a503-27af7bf0bb04\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ross_name'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "bepool",
+                        "etag": "W/\"d9c52a29-77cf-47a6-a503-27af7bf0bb04\"",
+                        "properties": {
+                            "provisioningState": "Succeeded"
+                        }
+                    }
+                ],
+                "loadBalancingRules": [],
+                "probes": [],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": [
+                    {
+                        "name": "natpool",
+                        "etag": "W/\"d9c52a29-77cf-47a6-a503-27af7bf0bb04\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "frontendPortRangeStart": 50000,
+                            "frontendPortRangeEnd": 50119,
+                            "backendPort": 22,
+                            "protocol": "Tcp",
+                            "frontendIPConfiguration": {
+                                "id": "[parameters('loadBalancers_rosslb_id')]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ross_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/publicIPAddresses/ross'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_ross_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "4dc4c9d9-d0f8-4c19-8710-b1c9f04ad0c2",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[concat(parameters('publicIPAddresses_ross_name'),'v1')]",
+                    "fqdn": "[concat(parameters('publicIPAddresses_ross_name'),'v1.eastus.cloudapp.azure.com')]"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/publicIPAddresses/ross6uigvpip'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_ross6uigvpip_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "6737b574-f804-42c4-aafb-0e76b0c50c95",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "ross",
+                    "fqdn": "ross.eastus.cloudapp.azure.com"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/publicIPAddresses/rossvnet11'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_rossvnet11_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "f2a688df-c239-4fd0-ad46-005b57226fe1",
+                "ipAddress": "40.71.209.183",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "rossvnet12",
+                    "fqdn": "rossvnet12.eastus.cloudapp.azure.com"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/virtualNetworks/assignment3Vnet'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_assignment3Vnet_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "86e1c78e-eb78-4e2d-9e34-d0acdc9b720f",
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "default",
+                        "etag": "W/\"33f55f80-b7fb-4c3a-a734-732f505dae4c\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefix": "10.0.0.0/21"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": []
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/virtualNetworks/ross6uigvvnet'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_ross6uigvvnet_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "b23122b0-7b43-49ca-9136-d31f55722d66",
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "ross6uigvsubnet",
+                        "etag": "W/\"cb368df4-a4ef-45d0-89e5-92f478413c3d\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": []
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/virtualNetworks/rossVnet'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_rossVnet_name')]",
+            "apiVersion": "2017-06-01",
+            "location": "eastus",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "resourceGuid": "2f29305f-fa1a-4cd7-90da-a89b23bfb8c4",
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "default",
+                        "etag": "W/\"33d31399-cff6-48e4-bcb6-7858e77eeafb\"",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefix": "10.0.0.0/21"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": []
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/virtualNetworks/assignment3Vnet/subnets/default'.",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "name": "[concat(parameters('virtualNetworks_assignment3Vnet_name'), '/', parameters('subnets_default_name_1'))]",
+            "apiVersion": "2017-06-01",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/21"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_assignment3Vnet_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/virtualNetworks/ross6uigvvnet/subnets/ross6uigvsubnet'.",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "name": "[concat(parameters('virtualNetworks_ross6uigvvnet_name'), '/', parameters('subnets_ross6uigvsubnet_name'))]",
+            "apiVersion": "2017-06-01",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/24"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_ross6uigvvnet_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/2a021fe7-1a43-4fd5-861a-6c8129c442ea/resourceGroups/batman/providers/Microsoft.Network/virtualNetworks/rossVnet/subnets/default'.",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "name": "[concat(parameters('virtualNetworks_rossVnet_name'), '/', parameters('subnets_default_name'))]",
+            "apiVersion": "2017-06-01",
+            "scale": null,
+            "properties": {
+                "provisioningState": "Succeeded",
+                "addressPrefix": "10.0.0.0/21"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_rossVnet_name'))]"
+            ]
+        }
+    ]
+}
